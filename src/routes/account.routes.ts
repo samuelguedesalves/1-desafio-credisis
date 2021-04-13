@@ -28,7 +28,7 @@ accountRoutes.post('/', async (request, response) => {
       email
     });
 
-    return response.status(200).json({ account, token });
+    return response.status(201).json({ account, token });
   } catch (error) {
     return response.status(error.status).json({ error: error.message });
   }

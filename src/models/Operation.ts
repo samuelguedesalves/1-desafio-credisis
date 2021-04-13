@@ -23,10 +23,17 @@ export class Operation {
   account: Account;
 
   @Column()
-  debit: string;
+  destination_account_fk: string;
+
+  @ManyToOne(() => Account )
+  @JoinColumn({ name: 'destination_account_fk' })
+  destinationAccount: Account;
 
   @Column()
-  credit: string;
+  debit: number;
+
+  @Column()
+  credit: number;
 
   @Column()
   launch_type: string;

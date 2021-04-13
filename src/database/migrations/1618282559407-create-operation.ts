@@ -24,6 +24,10 @@ export class createOperation1618282559407 implements MigrationInterface {
             type: 'uuid',
           },
           {
+            name: 'destination_account_fk',
+            type: 'uuid',
+          },
+          {
             name: 'debit',
             type: 'int',
           },
@@ -58,13 +62,25 @@ export class createOperation1618282559407 implements MigrationInterface {
         name: 'accountFk',
         columnNames: ['account_fk'],
         referencedTableName: 'accounts',
-        referencedColumnNames: ['id']
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      }));
+
+      await queryRunner.createForeignKey('operations', new TableForeignKey({
+        name: 'destinationAccountFk',
+        columnNames: ['destination_account_fk'],
+        referencedTableName: 'accounts',
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }));
 
 
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+      await queryRunner.dropForeignKey('operations', 'destinationAccountFk');
       await queryRunner.dropForeignKey('operations', 'accountFk');
 
       await queryRunner.dropTable('operations');
