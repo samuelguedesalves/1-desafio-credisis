@@ -8,8 +8,6 @@ import {
   OneToOne,
 } from "typeorm";
 
-import User from './User'
-
 @Entity('accounts')
 export class Account {
   @PrimaryGeneratedColumn('uuid')
@@ -19,14 +17,22 @@ export class Account {
   code: string;
 
   @Column()
-  balance: string;
+  balance: number;
 
   @Column()
-  user_fk: string;
+  username: string;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'user_fk' })
-  user: User;
+  @Column()
+  password: string;
+
+  @Column()
+  cpf: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  phone: string;
 
   @CreateDateColumn()
   created_at: Date;
