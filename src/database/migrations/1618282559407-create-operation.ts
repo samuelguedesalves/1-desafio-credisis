@@ -14,6 +14,8 @@ export class createOperation1618282559407 implements MigrationInterface {
           {
             name: 'id',
             type: 'uuid',
+            isGenerated: true,
+            isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },

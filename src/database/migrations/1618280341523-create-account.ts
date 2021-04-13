@@ -14,6 +14,8 @@ export class createAccount1618280341523 implements MigrationInterface {
           {
             name: 'id',
             type: 'uuid',
+            isGenerated: true,
+            isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },

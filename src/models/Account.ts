@@ -11,7 +11,7 @@ import {
 import User from './User'
 
 @Entity('accounts')
-export class Task {
+export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -34,3 +34,5 @@ export class Task {
   @UpdateDateColumn()
   updated_at: Date;
 }
+
+export default Account;
