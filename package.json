@@ -6,9 +6,11 @@
   "author": "samuelguedesalves <samuelguedes7070@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "pg": "^8.5.1",
@@ -16,7 +18,8 @@
     "typeorm": "^0.2.30"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.9",
+    "@types/bcrypt": "^3.0.1",
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
