@@ -32,21 +32,24 @@ export default async function debitOperationService ({
     throw new ApiError("you don't have sufficiently money to this transaction", 400);
   }
 
-  const destinationAccountExist = await accountRepository
+  const destinationAccount = await accountRepository
     .findOne({
       where: { code: destination_account }
     });
 
-  if(!destinationAccountExist){
+  if(!destinationAccount){
     throw new ApiError("destination account not exist", 400);
   }
 
-  //verificar se o usuário possui saldo
-  //verificar se existe o usuário remetente
+  account.balance = ( account.balance - value );
+  await accountRepository.save(account);
+
+  destinationAccount.balance = ( destinationAccount.balance + value );
+  await accountRepository.save(destinationAccount);
 
   const operation = operationRepository.create({
     account_fk: accountId,
-    destination_account_fk: destinationAccountExist.id,
+    destination_account_fk: destinationAccount.id,
     debit: value,
     credit: 0,
     description,
