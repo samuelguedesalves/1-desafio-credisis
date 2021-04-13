@@ -22,7 +22,6 @@ export class Operation {
   @JoinColumn({ name: 'account_fk' })
   account: Account;
 
-
   @Column()
   debit: string;
 

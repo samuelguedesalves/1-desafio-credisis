@@ -3,18 +3,10 @@ import ApiError from '../utils/ApiError';
 
 import createAccountService from '../services/createAccountService';
 
-const userRoutes = Router();
+const accountRoutes = Router();
 
-//LIST USERS
-userRoutes.get('/', (request, response) => {
-  try {
-
-  } catch (error) {
-    return response.status(error.status).json({ error: error.message });
-  }
-})
-
-userRoutes.post('/', async (request, response) => {
+// CREATE A ACCOUNT
+accountRoutes.post('/', async (request, response) => {
   try {
     const {
       username,
@@ -25,10 +17,10 @@ userRoutes.post('/', async (request, response) => {
     } = request.body;
 
     if( !username || !password || !cpf || !phone || !email ) {
-      throw new ApiError('invalid param in request', 400);
+      throw new ApiError('missing param in request', 400);
     }
 
-    const account = await createAccountService({
+    const { account, token } = await createAccountService({
       username,
       password,
       cpf,
@@ -36,10 +28,10 @@ userRoutes.post('/', async (request, response) => {
       email
     });
 
-    return response.status(200).json(account);
+    return response.status(200).json({ account, token });
   } catch (error) {
     return response.status(error.status).json({ error: error.message });
   }
 })
 
-export default userRoutes;
+export default accountRoutes;

@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
-import Account from '../models/Account'
+import Account from '../models/Account';
+import config from '../config';
 
 interface Request {
   username: string;
@@ -10,13 +12,18 @@ interface Request {
   email: string;
 }
 
+interface Response {
+  account: Omit<Account, 'password'>;
+  token: string;
+}
+
 export default async function createAccountService ({
   username,
   password,
   cpf,
   phone,
   email
-}: Request): Promise<Account> {
+}: Request): Promise<Response> {
   const accountRepository = getRepository(Account);
 
   const heshedPassword = await bcrypt.hash(password, 8);
@@ -33,5 +40,12 @@ export default async function createAccountService ({
 
   await accountRepository.save(account);
 
-  return account;
+  const token = jwt.sign({ id: account.id }, config.api_secret, { expiresIn: '24h' } );
+
+  const { password: pass, ...accountWithoutPass } = account;
+
+  return {
+    account: accountWithoutPass,
+    token
+  };
 }
