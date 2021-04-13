@@ -25,11 +25,27 @@ export class createAccount1618280341523 implements MigrationInterface {
           },
           {
             name: 'balance',
-            type: 'varchar'
+            type: 'int'
           },
           {
-            name: 'user_fk',
-            type: 'uuid'
+            name: 'username',
+            type: 'varchar',
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
+            name: 'cpf',
+            type: 'varchar',
+          },
+          {
+            name: 'phone',
+            type: 'varchar',
+          },
+          {
+            name: 'email',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -43,17 +59,9 @@ export class createAccount1618280341523 implements MigrationInterface {
           },
         ]
       }));
-
-      await queryRunner.createForeignKey('accounts', new TableForeignKey({
-        name: 'userFk',
-        columnNames: ['user_fk'],
-        referencedTableName: 'users',
-        referencedColumnNames: ['id']
-      }))
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropForeignKey('accounts', 'userFk');
       await queryRunner.dropTable('accounts');
     }
 
