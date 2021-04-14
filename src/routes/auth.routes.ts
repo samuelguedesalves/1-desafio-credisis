@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ApiError from '../utils/ApiError';
+import ApiError from '../errors/ApiError';
 import authAccountService from '../services/authAccountService'
 
 const authRoutes = Router();

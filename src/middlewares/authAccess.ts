@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 import authRoutes from '../routes/auth.routes';
-import ApiError from '../utils/ApiError';
+import ApiError from '../errors/ApiError';
 
 interface TokenPayload {
   id: string;
@@ -32,8 +32,6 @@ export default function authAccess (
       const data = jwt.verify(token, config.api_secret);
 
       const { id } = data as TokenPayload;
-
-      console.log(id);
 
       request.accountId = id;
 

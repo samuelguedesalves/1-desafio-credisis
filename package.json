@@ -1,13 +1,13 @@
 {
-  "name": "backend-setup",
+  "name": "chalenge-1",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/samuelguedesalves/backend-setup.git",
   "author": "samuelguedesalves <samuelguedes7070@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules --files src/server.ts",
-    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+    "dev": "set NODE_ENV=dev & ts-node-dev --ignore-watch node_modules --files src/server.ts",
+    "typeorm": "set NODE_ENV=dev & ts-node-dev node_modules/typeorm/cli.js",
+    "build": "tsc && set NODE_ENV=prod & ./node_modules/.bin/typeorm migration:run",
+    "start": "set NODE_ENV=prod & node dist/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

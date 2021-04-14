@@ -12,5 +12,5 @@ server.use(routes);
 
 const port = process.env.PORT || 3333;
 server.listen(port, () => {
-  console.log(`🚀 Server is running in port: ${port}\nPress ctrl+c to stop thid process`);
+  console.log(`🚀 Server is running in port: ${port}\nPress ctrl+c to stop process`);
 });

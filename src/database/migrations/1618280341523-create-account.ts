@@ -2,7 +2,6 @@ import {
   MigrationInterface,
   QueryRunner,
   Table,
-  TableForeignKey,
 } from "typeorm";
 
 export class createAccount1618280341523 implements MigrationInterface {
@@ -25,7 +24,7 @@ export class createAccount1618280341523 implements MigrationInterface {
           },
           {
             name: 'balance',
-            type: 'int'
+            type: 'decimal'
           },
           {
             name: 'username',

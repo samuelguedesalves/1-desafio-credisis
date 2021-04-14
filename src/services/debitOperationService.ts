@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import Operation from '../models/Operation';
 import Account from '../models/Account';
-import ApiError from '../utils/ApiError';
+import ApiError from '../errors/ApiError';
 
 interface Request {
   accountId: string;
@@ -18,50 +18,59 @@ export default async function debitOperationService ({
   description,
   system,
 }: Request) {
-
   const operationRepository = getRepository(Operation);
   const accountRepository = getRepository(Account);
 
-  const account = await accountRepository.findOne({ where: { id: accountId } });
+  // find data from account
+  const account = await accountRepository.findOne({
+    where: { id: accountId }
+  });
 
   if( !account ) {
     throw new ApiError("internal server error", 500);
   }
 
+  //verify the balance
   if( account.balance < value ) {
     throw new ApiError("you don't have sufficiently money to this transaction", 400);
   }
 
-  const destinationAccount = await accountRepository
-    .findOne({
-      where: { code: destination_account }
-    });
+  // verif destination account
+  const destinationAccount = await accountRepository.findOne({
+    where: { code: destination_account }
+  });
 
   if(!destinationAccount){
     throw new ApiError("destination account not exist", 400);
   }
 
-  account.balance = ( account.balance - value );
+  // lower balance from account
+  account.balance = ( parseFloat(`${account.balance}`) - value );
   await accountRepository.save(account);
 
-  destinationAccount.balance = ( destinationAccount.balance + value );
+  // upper balance from destination account
+  destinationAccount.balance = ( parseFloat(`${destinationAccount.balance}`) + value );
   await accountRepository.save(destinationAccount);
 
   const operation = operationRepository.create({
     account_fk: accountId,
-    destination_account_fk: destinationAccount.id,
     debit: value,
     credit: 0,
+    launch_type: 'debit',
     description,
     system,
   });
+  await operationRepository.save(operation);
+
+  const operationToDestinatary = operationRepository.create({
+    account_fk: destinationAccount.id,
+    debit: 0,
+    credit: value,
+    launch_type: 'credit',
+    description,
+    system,
+  });
+  await operationRepository.save(operationToDestinatary);
 
   return operation;
 }
-
-// account_fk
-// debit
-// credit
-// launch_type
-// description
-// system

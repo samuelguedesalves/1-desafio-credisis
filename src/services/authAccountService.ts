@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import Account from '../models/Account';
-import ApiError from '../utils/ApiError';
+import ApiError from '../errors/ApiError';
 import config from '../config'
 
 
@@ -22,7 +22,7 @@ export default async function generateTokenService ({ cpf, password }: Request):
   const accountExists = await accountRepository.findOne({ where: { cpf } });
 
   if( !accountExists ) {
-    throw new ApiError('this user are invalid', 404);
+    throw new ApiError('this user are not found', 404);
   }
 
   const comparePass = await bcrypt.compare(password, accountExists.password);

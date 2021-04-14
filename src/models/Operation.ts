@@ -23,13 +23,6 @@ export class Operation {
   account: Account;
 
   @Column()
-  destination_account_fk: string;
-
-  @ManyToOne(() => Account )
-  @JoinColumn({ name: 'destination_account_fk' })
-  destinationAccount: Account;
-
-  @Column()
   debit: number;
 
   @Column()

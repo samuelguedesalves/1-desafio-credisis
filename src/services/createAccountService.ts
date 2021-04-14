@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { verify } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import Account from '../models/Account';
 import config from '../config';
+import ApiError from '../errors/ApiError';
 
 interface Request {
   username: string;
@@ -25,6 +26,12 @@ export default async function createAccountService ({
   email
 }: Request): Promise<Response> {
   const accountRepository = getRepository(Account);
+
+  const verifyAccount = await accountRepository.findOne({ where: { cpf } });
+
+  if( verifyAccount ) {
+    throw new ApiError("the cpf are used in another account", 400);
+  }
 
   const heshedPassword = await bcrypt.hash(password, 8);
 

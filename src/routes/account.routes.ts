@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ApiError from '../utils/ApiError';
+import ApiError from '../errors/ApiError';
 
 import createAccountService from '../services/createAccountService';
 
@@ -32,6 +32,6 @@ accountRoutes.post('/', async (request, response) => {
   } catch (error) {
     return response.status(error.status).json({ error: error.message });
   }
-})
+});
 
 export default accountRoutes;
