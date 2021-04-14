@@ -133,3 +133,7 @@ Você pode acessar a rota: **[/operation](http://localhost:3333/operation/debit)
 ```json
 "authorization": "Bearer eyJhbGci..."
 ```
+
+## Modelo da Banco de Dados
+Modelo das tabelas do Banco de Dados.
+![Modelo do Banco de Dados](./public/database-model.png)
