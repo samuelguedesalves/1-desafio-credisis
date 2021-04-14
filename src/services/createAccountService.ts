@@ -36,7 +36,7 @@ export default async function createAccountService ({
   const heshedPassword = await bcrypt.hash(password, 8);
 
   const account = accountRepository.create({
-    balance: 0.00,
+    balance: 800.50,
     code: ( Date.now() + ((Math.random()*100000).toFixed()) ),
     username,
     password: heshedPassword,

@@ -34,6 +34,8 @@ export default async function generateTokenService ({ cpf, password }: Request):
 
     const  { password: ps, ...accountWithoutPassword } = accountExists;
 
+    accountWithoutPassword.balance = parseFloat(`${accountWithoutPassword.balance}`);
+
     return {
       account: accountWithoutPassword,
       token,

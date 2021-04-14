@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config';
-import authRoutes from '../routes/auth.routes';
 import ApiError from '../errors/ApiError';
 
 interface TokenPayload {

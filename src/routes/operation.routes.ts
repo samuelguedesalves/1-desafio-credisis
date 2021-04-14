@@ -26,7 +26,6 @@ operationRoutes.post('/debit', async (request, response) => {
 
     return response.status(200).json({ operation });
   } catch (error) {
-    console.log(error);
     return response.status(error.status).json({ error: error.message });
   }
 })

@@ -1,13 +1,15 @@
+const env = require('./env.json');
+
 const environment = String(process.env.NODE_ENV).trim()
 console.log(`🍃 Using environment: '${environment}'`);
 
 const devConfig = {
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "root",
-  database: "application",
+  type: env.database.type,
+  host: env.database.host,
+  port: env.database.port,
+  username: env.database.username,
+  password: env.database.password,
+  database: env.database.database,
   entities: [
     "src/models/*.ts"
   ],
@@ -21,12 +23,12 @@ const devConfig = {
 }
 
 const prodConfig = {
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "root",
-  database: "application",
+  type: env.database.type,
+  host: env.database.host,
+  port: env.database.port,
+  username: env.database.username,
+  password: env.database.password,
+  database: env.database.database,
   entities: [
     "dist/models/*.js"
   ],
