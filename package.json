@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set NODE_ENV=dev & ts-node-dev --ignore-watch node_modules --files src/server.ts",
     "typeorm": "set NODE_ENV=dev & ts-node-dev node_modules/typeorm/cli.js",
-    "build": "tsc && set NODE_ENV=prod & ./node_modules/.bin/typeorm migration:run",
+    "build": "tsc && set NODE_ENV=prod && typeorm migration:run",
     "start": "set NODE_ENV=prod & node dist/server.js"
   },
   "dependencies": {
